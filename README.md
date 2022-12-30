@@ -1,0 +1,1 @@
+A note taking extention that allows you to take notes on any website. You will never be afriad of losing your note because it is attached to the WEBSITE!!!
