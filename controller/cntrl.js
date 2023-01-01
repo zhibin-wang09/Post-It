@@ -4,10 +4,14 @@ const ejs = require('ejs')
 
 
 const getAllNote = async (req,res)=> {
-    const collection = await note.find({})
-    res.status(200).render('notedisplay',{
-        collection : collection
-    })
+    try {
+        const collection = await note.find({})
+        res.status(200).render('notedisplay',{
+            collection : collection
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const postNote = async (req,res) => {
