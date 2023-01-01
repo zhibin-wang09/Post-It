@@ -13,8 +13,8 @@ const getAllNote = async (req,res)=> {
 const postNote = async (req,res) => {
     
     try {
-        const collection = await note.find({})
         const createdNote = await note.create(req.body)
+        const collection = await note.find({})
         res.status(200).render('notedisplay',{
             collection : collection
         })
