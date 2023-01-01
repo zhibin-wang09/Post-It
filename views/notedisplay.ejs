@@ -5,19 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheet.css">
-    <title>Document</title>
+    <title>Notes    </title>
 </head>
 <body>
     <div id="note-taking-area">
-        <form action ="http://localhost:5500/api/v1/notes" method="post">
+        <form action ="http://localhost:5500/" method="post">
             <input id="title" placeholder="name of the note" type="text" name="title">
             <textarea id="text-area" name="note" placeholder="notes..."></textarea>
             <button type="submit" id="save-btn">Save</button>
         </form>
     </div>
-    <div id="note-history-display">
-        
-    </div>
+    
+        <%collection.forEach(note => {%>
+            <div class="note-history-display">
+                <h3><%=note.title%></h3>
+                <p><%=note.note%></p>
+            </div>
+        <% }) %>
+    
     <script src="./app.js"></script>
 </body>
 </html>

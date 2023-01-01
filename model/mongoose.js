@@ -2,8 +2,18 @@ const mongoose = require('mongoose')
 
 
 const noteSchema = new mongoose.Schema({
-    title : String,
-    note: String
+    title : {
+        type: String,
+        required: true
+    },
+    note:{
+        type: String,
+        required: true
+    },
+    /* webaddress : {
+        type: String,
+        required: true
+    } */
 })
 
 module.exports = mongoose.model('note',noteSchema)

@@ -1,12 +1,26 @@
 const mongoose = require('mongoose')
-const schema = require('../model/mongoose.js')
+const note = require('../model/mongoose.js')
+const ejs = require('ejs')
+
 
 const getAllNote = async (req,res)=> {
-    res.status(200).json({msg:"success"})
+    const collection = await note.find({})
+    res.status(200).render('notedisplay',{
+        collection : collection
+    })
 }
 
 const postNote = async (req,res) => {
-    res.status(200).json({msg:"success", body: req.body})
+    
+    try {
+        const collection = await note.find({})
+        const createdNote = await note.create(req.body)
+        res.status(200).render('notedisplay',{
+            collection : collection
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const deleteNote = async (req,res) => {
