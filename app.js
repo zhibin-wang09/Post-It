@@ -1,11 +1,14 @@
 const express = require('express')
 const router = require('./router/route.js')
 const connection = require('./database/connect.js')
+var bodyParser = require('body-parser');
 const dotenv = require('dotenv').config()
 const app = express()
-const PORT = 8080
+const PORT = 5500
 const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}@cluster0.qwweo4r.mongodb.net/notes?retryWrites=true&w=majority`
 //parse incoming request to json format
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(express.static("./public"))
 app.use(express.json())
 app.use("/api/v1",router)
 
