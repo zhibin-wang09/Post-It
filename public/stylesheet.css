@@ -31,7 +31,7 @@ body{
     display:inline-block;
 }
 
-.deleteBtn{
+.delete-btn{
     margin: 10px;
     border-style: none;
     background-color: #e7ffe0;
@@ -39,7 +39,7 @@ body{
     border-radius:20px;
 }
 
-.editBtn{
+.edit-btn{
     margin: 10px;
     border-style: none;
     background-color: #e7ffe0;
@@ -60,10 +60,9 @@ body{
     display: grid;
 }
 
-p, h3{
-    margin-left: 10px;
-}
+
 
 p{
     line-height: 200%;
+    margin-left: 10px;
 }
