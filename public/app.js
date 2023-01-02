@@ -9,16 +9,29 @@ async function showNotes(){
         const notes = data.notes
     notes.forEach(writtenNote => {
         const note = document.createElement('div')
-        //Created title
+        const header = document.createElement('div')
+        header.setAttribute('class','header')
+        //Creat title
         const title = document.createElement('h3')
-        title.setAttribute('class','title')
+        title.setAttribute('class','noteTitle')
         title.innerHTML = writtenNote.title
-
+        //Create delete button
+        const deleteBtn = document.createElement('button')
+        deleteBtn.setAttribute('class','deleteBtn')
+        deleteBtn.innerHTML = "Delete Note"
+        //Create edit button
+        const editBtn = document.createElement('button')
+        editBtn.setAttribute('class','editBtn')
+        editBtn.innerHTML = "Edit Note"
+        //Insert to header
+        header.appendChild(title)
+        header.appendChild(deleteBtn)
+        header.appendChild(editBtn)
         //Create note content
         const content = document.createElement('p')
         content.innerHTML = writtenNote.note
 
-        note.appendChild(title)
+        note.appendChild(header)
         note.appendChild(content)
         note.setAttribute('class', 'note-history-display')
         noteDisplay.appendChild(note)

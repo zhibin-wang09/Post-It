@@ -1,6 +1,6 @@
 body{
     background-color: #26262b;
-    font-family: sans-serif;
+    font-family: monospace;
 }
 
 #save-btn{
@@ -8,7 +8,8 @@ body{
     display:block;
     border-style: none;
     background-color: #e7ffe0;
-    font-size: 1rem;
+    font-size: 0.7 rem;
+    border-radius: 20px;
 }
 
 #text-area{
@@ -16,6 +17,34 @@ body{
     display:block;
     min-width:400px;
     
+    
+}
+
+.header{
+    margin-left : 10px;
+    display:grid;
+    min-width:400px;
+    grid-template-columns: 1fr 100px 100px;
+    overflow: hidden;
+}
+.noteTitle{
+    display:inline-block;
+}
+
+.deleteBtn{
+    margin: 10px;
+    border-style: none;
+    background-color: #e7ffe0;
+    font-size: 0.7 rem;
+    border-radius:20px;
+}
+
+.editBtn{
+    margin: 10px;
+    border-style: none;
+    background-color: #e7ffe0;
+    font-size: 0.7 rem;
+    border-radius:20px;
 }
 
 #title{
@@ -28,8 +57,13 @@ body{
     border-style: solid;
     background-color: white;
     color: #26262b;
+    display: grid;
 }
 
 p, h3{
     margin-left: 10px;
+}
+
+p{
+    line-height: 200%;
 }

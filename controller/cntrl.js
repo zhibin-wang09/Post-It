@@ -4,6 +4,7 @@ const note = require('../model/mongoose.js')
 
 const getAllNote = async (req,res)=> {
     try {
+
         const data = await note.find({})
         res.status(200).json({msg:"Get success", notes: data})
     } catch (error) {
