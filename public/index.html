@@ -9,15 +9,14 @@
 </head>
 <body>
     <div id="note-taking-area">
-        <form action ="http://localhost:5500/api/v1/notes" method="post">
+        <form id="noteInfo">
             <input id="title" placeholder="name of the note" type="text" name="title">
             <textarea id="text-area" name="note" placeholder="notes..."></textarea>
             <button type="submit" id="save-btn">Save</button>
         </form>
     </div>
-    <div id="note-history-display">
-        
-    </div>
-    <script src="./app.js"></script>
+    <div id="note-history-display-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

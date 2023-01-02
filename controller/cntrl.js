@@ -1,38 +1,36 @@
 const mongoose = require('mongoose')
 const note = require('../model/mongoose.js')
-const ejs = require('ejs')
 
 
 const getAllNote = async (req,res)=> {
     try {
-        const collection = await note.find({})
-        res.status(200).render('notedisplay',{
-            collection : collection
-        })
+
+        const data = await note.find({})
+        res.status(200).json({msg:"Get success", notes: data})
     } catch (error) {
         console.log(error)
     }
 }
 
 const postNote = async (req,res) => {
-    
-    try {
-        const createdNote = await note.create(req.body)
-        const collection = await note.find({})
-        res.status(200).render('notedisplay',{
-            collection : collection
-        })
-    } catch (error) {
+   try {
+        const title = req.body.title
+        const noteContent = req.body.note
+        await note.create({
+            title:title, 
+            note:noteContent})
+        res.status(200).json({msg:"Success", })
+   } catch (error) {
         console.log(error)
-    }
+   }
 }
 
 const deleteNote = async (req,res) => {
-    res.status(200).json({msg:"success"})
+    res.status(200).json({msg:"Delete success"})
 }
 
 const updateNote = async (req,res) => {
-    res.status(200).json({msg:"success"})
+    res.status(200).json({msg:"Put success"})
 }
 
 module.exports = {getAllNote,
