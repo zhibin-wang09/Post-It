@@ -3,13 +3,25 @@ const note = require('../model/mongoose.js')
 
 
 const getAllNote = async (req,res)=> {
-    const data = await note.find({})
-    res.status(200).json({msg:"Get success", notes: data})
+    try {
+        const data = await note.find({})
+        res.status(200).json({msg:"Get success", notes: data})
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const postNote = async (req,res) => {
-    
-    res.status(200).json({msg:"Post success"})
+   try {
+        const title = req.body.title
+        const noteContent = req.body.note
+        await note.create({
+            title:title, 
+            note:noteContent})
+        res.status(200).json({msg:"Success", })
+   } catch (error) {
+        console.log(error)
+   }
 }
 
 const deleteNote = async (req,res) => {

@@ -1,8 +1,12 @@
 const noteDisplay = document.getElementById("note-history-display-container")
+const form = document.getElementById('noteInfo')
+const title = document.getElementById('title')
+const noteContent = document.getElementById('text-area')
 
 async function showNotes(){
-    const {data} = await axios.get('http://localhost:5500/note')
-    const notes = data.notes
+    try {
+        const {data} = await axios.get('http://localhost:5500/note')
+        const notes = data.notes
     notes.forEach(writtenNote => {
         const note = document.createElement('div')
         //Created title
@@ -19,12 +23,22 @@ async function showNotes(){
         note.setAttribute('class', 'note-history-display')
         noteDisplay.appendChild(note)
     });
+    } catch (error) {
+        console.log(error)
+    }
 }
-
-async function post(){
-    
-}
-
 
 showNotes()
 
+form.addEventListener('submit', async (e) => {
+    try {
+        e.preventDefault()
+        await axios.post('http://localhost:5500/note',{
+            title: title.value,
+            note: noteContent.value
+        })
+        showNotes()
+    } catch (error) {
+        console.log(error)
+    }
+})
