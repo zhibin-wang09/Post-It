@@ -5,7 +5,8 @@ const noteContent = document.getElementById('text-area')
 
 async function showNotes(){
     try {
-        const {data} = await axios.get('http://localhost:5500/note')
+        const res = await fetch('http://localhost:5500/note')
+        const data = await res.json()
         const notes = data.notes
         //Using note.forEach() is not as good as notes.map() because 
             let acc = "";
@@ -34,7 +35,6 @@ async function showNotes(){
             //Create note content
             const content = document.createElement('p')
             content.innerHTML = writtenNote.note
-
             note.appendChild(header)
             note.appendChild(content)
             note.setAttribute('class', 'note-history-display')
@@ -53,9 +53,16 @@ showNotes()
 form.addEventListener('submit', async (e) => {
     try {
         e.preventDefault()
-        await axios.post('http://localhost:5500/note',{
+        const note = {
             title: title.value,
             note: noteContent.value
+        }
+        const res = await fetch('http://localhost:5500/note' , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(note)
         })
         noteContent.value =''
         title.value = ''
@@ -70,7 +77,9 @@ noteDisplay.addEventListener('click' , async (e) => {
     try {
         const id = e.target.dataset.id
         if(e.target.className === "delete-btn"){
-            await axios.delete(`http://localhost:5500/note/${id}`)
+            const res = await fetch(`http://localhost:5500/note/${id}`, {
+                method: "DELETE"
+            })
             const header = e.target.parentElement.parentElement
             header.remove()
             showNotes()
