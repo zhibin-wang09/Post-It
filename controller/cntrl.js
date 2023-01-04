@@ -7,7 +7,7 @@ const getAllNote = async (req,res)=> {
         const data = await note.find({})
         res.status(200).json({msg:"Get success", notes: data})
     } catch (error) {
-        console.log(error)
+        res.status(400).json({msg:"Failed",error:error})
     }
 }
 
@@ -20,12 +20,17 @@ const postNote = async (req,res) => {
             note:noteContent})
         res.status(200).json({msg:"Success", })
    } catch (error) {
-        console.log(error)
+        res.status(400).json({msg:"Failed",error:error})
    }
 }
 
 const deleteNote = async (req,res) => {
-    res.status(200).json({msg:"Delete success"})
+    try {
+        await note.deleteOne({_id:req.params.id})
+        res.status(200).json({msg:"Success"})
+    } catch (error) {
+        res.status(400).json({msg:"Failed",error:error})
+    }
 }
 
 const updateNote = async (req,res) => {

@@ -19,11 +19,13 @@ async function showNotes(){
             title.innerHTML = writtenNote.title
             //Create delete button
             const deleteBtn = document.createElement('button')
-            deleteBtn.setAttribute('class','deleteBtn')
+            deleteBtn.setAttribute('class','delete-btn')
+            deleteBtn.setAttribute('data-id', writtenNote._id)
             deleteBtn.innerHTML = "Delete Note"
             //Create edit button
             const editBtn = document.createElement('button')
-            editBtn.setAttribute('class','editBtn')
+            editBtn.setAttribute('class','edit-btn')
+            editBtn.setAttribute('data-id' , writtenNote._id)
             editBtn.innerHTML = "Edit Note"
             //Insert to header
             header.appendChild(title)
@@ -36,7 +38,7 @@ async function showNotes(){
             note.appendChild(header)
             note.appendChild(content)
             note.setAttribute('class', 'note-history-display')
-            acc += note.outerHTML
+            acc += note.outerHTML;
         });
         noteDisplay.innerHTML = acc
         } catch (error) {
@@ -60,8 +62,24 @@ form.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify(note)
         })
-        console.log(res)
         showNotes()
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+noteDisplay.addEventListener('click' , async (e) => {
+    e.preventDefault()
+    try {
+        const id = e.target.dataset.id
+        if(e.target.className === "delete-btn"){
+            const res = await fetch(`http://localhost:5500/note/${id}`, {
+                method: "DELETE"
+            })
+            const header = e.target.parentElement.parentElement
+            header.remove()
+            showNotes()
+        }
     } catch (error) {
         console.log(error)
     }
