@@ -1,5 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Note Taking Companion",
-    "version": "1.0.1"
+    "version": "1.0.1",
+    "action": {
+        "default_popup": "./public/index.html"
+    }   
 }
