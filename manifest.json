@@ -4,5 +4,6 @@
     "version": "1.0.1",
     "action": {
         "default_popup": "./public/index.html"
-    }   
+    },
+    "host_permissions": ["http://localhost:5500/*"]
 }
