@@ -8,6 +8,7 @@ async function showNotes(){
         const res = await fetch('http://localhost:5500/note')
         const data = await res.json()
         const notes = data.notes
+        const acc = ""
         notes.forEach(writtenNote => {
             const note = document.createElement('div')
             const header = document.createElement('div')
@@ -37,6 +38,7 @@ async function showNotes(){
             note.setAttribute('class', 'note-history-display')
             noteDisplay.appendChild(note)
         });
+
         } catch (error) {
             console.log(error)
         }
@@ -53,9 +55,13 @@ form.addEventListener('submit', async (e) => {
             title: title.value,
             note: noteContent.value
         }
+        console.log(note)
         const res = await fetch('http://localhost:5500/note' , {
             method: 'POST',
-            body: note
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(note)
         })
         console.log(res)
         showNotes()
