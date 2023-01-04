@@ -8,7 +8,8 @@ async function showNotes(){
         const res = await fetch('http://localhost:5500/note')
         const data = await res.json()
         const notes = data.notes
-        let acc = ""
+        //Using note.forEach() is not as good as notes.map() because 
+            let acc = "";
         notes.forEach(writtenNote => {
             const note = document.createElement('div')
             const header = document.createElement('div')
@@ -34,16 +35,17 @@ async function showNotes(){
             //Create note content
             const content = document.createElement('p')
             content.innerHTML = writtenNote.note
-
             note.appendChild(header)
             note.appendChild(content)
             note.setAttribute('class', 'note-history-display')
             acc += note.outerHTML;
         });
-        noteDisplay.innerHTML = acc
-        } catch (error) {
-            console.log(error)
-        }
+        noteDisplay.innerHTML = acc;
+
+    } catch (error) {
+        noteDisplay.innerHTML = "<h3>There was a error...</h3>"
+        console.log(error)
+    }
 }
 
 showNotes()
@@ -62,6 +64,8 @@ form.addEventListener('submit', async (e) => {
             },
             body: JSON.stringify(note)
         })
+        noteContent.value =''
+        title.value = ''
         showNotes()
     } catch (error) {
         console.log(error)
