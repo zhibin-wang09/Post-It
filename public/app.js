@@ -2,7 +2,6 @@ const noteDisplay = document.getElementById("note-history-display-container")
 const form = document.getElementById('noteInfo')
 const title = document.getElementById('title')
 const noteContent = document.getElementById('text-area')
-
 async function showNotes(){
     try {
         const res = await fetch('http://localhost:5500/note')
@@ -83,6 +82,24 @@ noteDisplay.addEventListener('click' , async (e) => {
             const header = e.target.parentElement.parentElement
             header.remove()
             showNotes()
+        }
+        
+        if(e.target.className === "edit-btn"){
+            let form = document.createElement('form')
+            let textarea = document.createElement('textarea')
+            textarea.setAttribute('class','edit-text-area')
+            const container = e.target.parentElement.parentElement
+            const previousContent = container.children[1].innerHTML
+            textarea.innerHTML = previousContent
+            if(container.children[1].tagName != "FORM"){
+                const saveBtn = document.createElement('button')
+                saveBtn.setAttribute('class','save-btn')
+                saveBtn.setAttribute('type','submit')
+                saveBtn.innerHTML = "Save"
+                form.appendChild(textarea)
+                form.appendChild(saveBtn)
+                container.replaceChild(form,container.children[1])
+            }
         }
     } catch (error) {
         console.log(error)

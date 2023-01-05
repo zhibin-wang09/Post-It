@@ -3,7 +3,7 @@ body{
     font-family: monospace;
 }
 
-#save-btn{
+.save-btn{
     margin: 10px;
     display:block;
     border-style: none;
@@ -13,11 +13,9 @@ body{
 }
 
 #text-area{
-    margin-left : 10px;
     display:block;
-    min-width:400px;
-    
-    
+    min-width:500px;
+    margin:10px;    
 }
 
 .header{
@@ -65,4 +63,10 @@ body{
 p{
     line-height: 200%;
     margin-left: 10px;
+}
+
+.edit-text-area{
+    display:block;
+    min-width:300px;
+    margin:10px; 
 }
