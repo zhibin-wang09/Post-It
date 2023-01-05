@@ -16,6 +16,7 @@ body{
     display:block;
     min-width:500px;
     margin:10px;    
+    border-radius:5px;
 }
 
 .header{
@@ -47,6 +48,7 @@ body{
 
 #title{
     margin:10px;
+    border-radius: 5px;
     padding: 5px;
 }
 
@@ -69,4 +71,5 @@ p{
     display:block;
     min-width:300px;
     margin:10px; 
+    border-radius: 5px;
 }
