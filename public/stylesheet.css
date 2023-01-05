@@ -32,7 +32,7 @@ body{
 }
 
 .delete-btn{
-    margin-right: 10px;
+    margin: 10px 10px 10px 0;
     border-style: none;
     background-color: #e7ffe0;
     font-size: 0.7 rem;
@@ -40,7 +40,7 @@ body{
 }
 
 .edit-btn{
-    margin-left:10px;
+    margin:10px 0px 10px 10px;
     border-style: none;
     background-color: #e7ffe0;
     font-size: 0.7 rem;
