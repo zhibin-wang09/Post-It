@@ -34,7 +34,13 @@ const deleteNote = async (req,res) => {
 }
 
 const updateNote = async (req,res) => {
-    res.status(200).json({msg:"Put success"})
+    try {
+        await note.updateOne({_id:req.params.id},{note:req.body.note})
+        res.status(200).json({msg:"Put success"})
+    } catch (error) {
+        res.status(400).json({msg:"Failed",error:error})
+    }
+    
 }
 
 module.exports = {getAllNote,

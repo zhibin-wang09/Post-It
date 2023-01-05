@@ -49,7 +49,7 @@ async function showNotes(){
 
 showNotes()
 
-form.addEventListener('submit', async (e) => {
+const test = form.addEventListener('submit', async (e) => {
     try {
         e.preventDefault()
         const note = {
@@ -72,7 +72,7 @@ form.addEventListener('submit', async (e) => {
 })
 
 noteDisplay.addEventListener('click' , async (e) => {
-    e.preventDefault()
+    //e.preventDefault()
     try {
         const id = e.target.dataset.id
         if(e.target.className === "delete-btn"){
@@ -85,20 +85,38 @@ noteDisplay.addEventListener('click' , async (e) => {
         }
         
         if(e.target.className === "edit-btn"){
-            let form = document.createElement('form')
-            let textarea = document.createElement('textarea')
-            textarea.setAttribute('class','edit-text-area')
             const container = e.target.parentElement.parentElement
-            const previousContent = container.children[1].innerHTML
-            textarea.innerHTML = previousContent
             if(container.children[1].tagName != "FORM"){
+                let updateForm = document.createElement('form')
+                updateForm.setAttribute('id','updateInfo')
+                let textarea = document.createElement('textarea')
+                textarea.setAttribute('class','edit-text-area')
+                const previousContent = container.children[1].innerHTML
+                textarea.innerHTML = previousContent
                 const saveBtn = document.createElement('button')
-                saveBtn.setAttribute('class','save-btn')
                 saveBtn.setAttribute('type','submit')
-                saveBtn.innerHTML = "Save"
-                form.appendChild(textarea)
-                form.appendChild(saveBtn)
-                container.replaceChild(form,container.children[1])
+                saveBtn.setAttribute('class','save-btn')
+                saveBtn.innerHTML = "Update"
+                updateForm.appendChild(textarea)
+                updateForm.appendChild(saveBtn)
+                updateForm.addEventListener('submit', async (e)=>{
+                    e.preventDefault()
+                    try {
+                        await fetch(`http://localhost:5500/note/${id}`, {
+                            method: "PATCH",
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                note: textarea.value
+                            })
+                        })
+                    showNotes() 
+                    } catch (error) {
+                        console.log(error)
+                    }
+                })
+                container.replaceChild(updateForm,container.children[1])
             }
         }
     } catch (error) {
