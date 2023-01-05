@@ -25,14 +25,14 @@ body{
     display:grid;
     min-width:400px;
     grid-template-columns: 1fr 100px 100px;
-    overflow: hidden;
+    min-width: 50px;
 }
 .noteTitle{
     display:inline-block;
 }
 
 .delete-btn{
-    margin: 10px;
+    margin-right: 10px;
     border-style: none;
     background-color: #e7ffe0;
     font-size: 0.7 rem;
@@ -40,7 +40,7 @@ body{
 }
 
 .edit-btn{
-    margin: 10px;
+    margin-left:10px;
     border-style: none;
     background-color: #e7ffe0;
     font-size: 0.7 rem;
