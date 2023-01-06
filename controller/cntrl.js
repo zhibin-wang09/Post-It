@@ -35,8 +35,11 @@ const deleteNote = async (req,res) => {
 
 const updateNote = async (req,res) => {
     try {
-        await note.updateOne({_id:req.params.id},{note:req.body.note})
-        res.status(200).json({msg:"Put success"})
+        await note.updateOne({_id:req.params.id},{
+            title:req.body.title,
+            note:req.body.note})
+        console.log("PUT")
+        res.status(200).json({msg:"Patch success"})
     } catch (error) {
         res.status(400).json({msg:"Failed",error:error})
     }

@@ -34,8 +34,10 @@ async function showNotes(){
             //Create note content
             const content = document.createElement('p')
             content.innerHTML = writtenNote.note
-            note.appendChild(header)
-            note.appendChild(content)
+            const createdForm = document.createElement('form')
+            createdForm.appendChild(header)
+            createdForm.appendChild(content)
+            note.appendChild(createdForm)
             note.setAttribute('class', 'note-history-display')
             acc += note.outerHTML;
         });
@@ -71,6 +73,8 @@ const test = form.addEventListener('submit', async (e) => {
     }
 })
 
+
+
 noteDisplay.addEventListener('click' , async (e) => {
     //e.preventDefault()
     try {
@@ -85,38 +89,44 @@ noteDisplay.addEventListener('click' , async (e) => {
         }
         
         if(e.target.className === "edit-btn"){
-            const container = e.target.parentElement.parentElement
-            if(container.children[1].tagName != "FORM"){
-                let updateForm = document.createElement('form')
-                updateForm.setAttribute('id','updateInfo')
-                let textarea = document.createElement('textarea')
-                textarea.setAttribute('class','edit-text-area')
-                const previousContent = container.children[1].innerHTML
-                textarea.innerHTML = previousContent
-                const saveBtn = document.createElement('button')
-                saveBtn.setAttribute('type','submit')
-                saveBtn.setAttribute('class','save-btn')
-                saveBtn.innerHTML = "Update"
-                updateForm.appendChild(textarea)
-                updateForm.appendChild(saveBtn)
-                updateForm.addEventListener('submit', async (e)=>{
+            const containerForm = e.target.parentElement.parentElement
+            const header = e.target.parentElement
+            if(!containerForm.children[2]){
+                const updateTextArea = document.createElement('textarea')
+                updateTextArea.innerHTML = containerForm.children[1].innerHTML //Transfer over the text
+                updateTextArea.setAttribute('class','edit-text-area')
+                
+                const updateBtn = document.createElement('button')
+                updateBtn.setAttribute('type','submit')
+                updateBtn.setAttribute('class','save-btn')
+                updateBtn.innerHTML ='Update'
+                containerForm.appendChild(updateBtn)
+
+                const updateTitle = document.createElement('input')
+                updateTitle.setAttribute('class','update-title')
+                updateTitle.setAttribute('value', header.children[0].innerHTML)
+
+                header.replaceChild(updateTitle,header.children[0])
+                containerForm.replaceChild(updateTextArea,containerForm.children[1]) //Replace text with textarea
+                containerForm.addEventListener('submit', async (e) => {
                     e.preventDefault()
                     try {
+                        
                         await fetch(`http://localhost:5500/note/${id}`, {
                             method: "PATCH",
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                             body: JSON.stringify({
-                                note: textarea.value
+                                title: updateTitle.value,
+                                note: updateTextArea.value
                             })
                         })
-                    showNotes() 
+                        showNotes()
                     } catch (error) {
                         console.log(error)
                     }
                 })
-                container.replaceChild(updateForm,container.children[1])
             }
         }
     } catch (error) {

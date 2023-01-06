@@ -57,7 +57,6 @@ body{
     border-style: solid;
     background-color: white;
     color: #26262b;
-    display: grid;
 }
 
 
@@ -72,4 +71,10 @@ p{
     min-width:300px;
     margin:10px; 
     border-radius: 5px;
+}
+
+.update-title{
+    margin:10px 10px 10px 0px;
+    border-radius: 5px;
+    padding:5px;
 }
