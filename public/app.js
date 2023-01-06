@@ -8,7 +8,7 @@ async function showNotes(){
         const data = await res.json()
         const notes = data.notes
         //Using note.forEach() is not as good as notes.map() because 
-            let acc = "";
+        let acc = "";
         notes.forEach(writtenNote => {
             const note = document.createElement('div')
             const header = document.createElement('div')
@@ -18,15 +18,17 @@ async function showNotes(){
             title.setAttribute('class','noteTitle')
             title.innerHTML = writtenNote.title
             //Create delete button
-            const deleteBtn = document.createElement('button')
+            const deleteBtn = document.createElement('input')
             deleteBtn.setAttribute('class','delete-btn')
             deleteBtn.setAttribute('data-id', writtenNote._id)
-            deleteBtn.innerHTML = "Delete Note"
+            deleteBtn.setAttribute('type','button')
+            deleteBtn.setAttribute('value','Delete Note')
             //Create edit button
-            const editBtn = document.createElement('button')
+            const editBtn = document.createElement('input')
             editBtn.setAttribute('class','edit-btn')
             editBtn.setAttribute('data-id' , writtenNote._id)
-            editBtn.innerHTML = "Edit Note"
+            editBtn.setAttribute('type','button')
+            editBtn.setAttribute('value', 'Edit Note')
             //Insert to header
             header.appendChild(title)
             header.appendChild(deleteBtn)
@@ -40,7 +42,7 @@ async function showNotes(){
             note.appendChild(createdForm)
             note.setAttribute('class', 'note-history-display')
             acc += note.outerHTML;
-        });
+        }); 
         noteDisplay.innerHTML = acc;
 
     } catch (error) {
@@ -96,13 +98,14 @@ noteDisplay.addEventListener('click' , async (e) => {
                 updateTextArea.innerHTML = containerForm.children[1].innerHTML //Transfer over the text
                 updateTextArea.setAttribute('class','edit-text-area')
                 
-                const updateBtn = document.createElement('button')
+                const updateBtn = document.createElement('input')
                 updateBtn.setAttribute('type','submit')
                 updateBtn.setAttribute('class','save-btn')
-                updateBtn.innerHTML ='Update'
+                updateBtn.setAttribute('value',"Update")
                 containerForm.appendChild(updateBtn)
 
                 const updateTitle = document.createElement('input')
+                updateTitle.setAttribute('type','text')
                 updateTitle.setAttribute('class','update-title')
                 updateTitle.setAttribute('value', header.children[0].innerHTML)
 
@@ -126,7 +129,7 @@ noteDisplay.addEventListener('click' , async (e) => {
                     } catch (error) {
                         console.log(error)
                     }
-                })
+                }) 
             }
         }
     } catch (error) {
