@@ -2,6 +2,12 @@ const noteDisplay = document.getElementById("note-history-display-container")
 const form = document.getElementById('noteInfo')
 const title = document.getElementById('title')
 const noteContent = document.getElementById('text-area')
+var url = ""
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    url = tabs[0].url;
+    // Do something with url
+});
+
 async function showNotes(){
     try {
         const res = await fetch('http://localhost:5500/note')
@@ -58,7 +64,8 @@ const test = form.addEventListener('submit', async (e) => {
         e.preventDefault()
         const note = {
             title: title.value,
-            note: noteContent.value
+            note: noteContent.value,
+            webaddress : url
         }
         const res = await fetch('http://localhost:5500/note' , {
             method: 'POST',

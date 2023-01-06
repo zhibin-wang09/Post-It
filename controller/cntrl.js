@@ -17,7 +17,9 @@ const postNote = async (req,res) => {
         const noteContent = req.body.note
         await note.create({
             title:title, 
-            note:noteContent})
+            note:noteContent,
+            webaddress: req.body.webaddress
+        })
         res.status(200).json({msg:"Success", })
    } catch (error) {
         res.status(400).json({msg:"Failed",error:error})

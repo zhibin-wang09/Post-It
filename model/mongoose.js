@@ -10,10 +10,9 @@ const noteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    /* webaddress : {
-        type: String,
-        required: true
-    } */
+     webaddress : {
+        type: String
+    }
 })
 
 module.exports = mongoose.model('note',noteSchema)
