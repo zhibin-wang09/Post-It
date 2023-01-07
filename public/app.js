@@ -5,14 +5,19 @@ const noteContent = document.getElementById('text-area')
 var url = ""
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     url = tabs[0].url;
-    // Do something with url
 });
 
 async function showNotes(){
     try {
-        const res = await fetch('http://localhost:5500/note')
+        const res = await fetch('http://localhost:5500/note',{
+            method:"GET",
+        })
         const data = await res.json()
-        const notes = data.notes
+        const notes = data.notes.filter(res => {
+            if(res.webaddress == url){
+                return res.webaddress
+            }
+        } )
         //Using note.forEach() is not as good as notes.map() because 
         let acc = "";
         notes.forEach(writtenNote => {
