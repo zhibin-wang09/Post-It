@@ -5,6 +5,8 @@ const noteContent = document.getElementById('text-area')
 var url = ""
 chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     url = tabs[0].url;
+    const urlobj = new URL(url)
+    url = urlobj.origin
 });
 
 async function showNotes(){
