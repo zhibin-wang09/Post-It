@@ -3,11 +3,14 @@
     "name": "Digital Post It",
     "version": "1.0.1",
     "action": {
-        "default_popup": "./public/index.html",
-        "default_icon": "./icon/PostIt.png"
+        "default_popup": "./public/index.html"
     },
     "host_permissions": ["http://localhost:5500/*"],
     "permissions": [
         "tabs"
-    ]
+    ],
+    "description" : "Digital Post it is a simple note-taking extension that allows you to take notes on any website. You will never be afraid of losing your note because it is attached to the WEBSITE!!!",
+    "icons": {
+        "16" : "./icon/PostIt.png"
+    }
 }
