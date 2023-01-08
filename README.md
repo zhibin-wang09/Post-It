@@ -1,4 +1,4 @@
-# Project Name: Post It
+# Project Name: Virtual Post It
 Post it is a simple note-taking extension that allows you to take notes on any website. You will never be afraid of losing your note because it is attached to the WEBSITE!!!
 
 ## Disclaimer
