@@ -1,9 +1,10 @@
 {
     "manifest_version": 3,
-    "name": "Note Taking Companion",
+    "name": "Digital Post It",
     "version": "1.0.1",
     "action": {
-        "default_popup": "./public/index.html"
+        "default_popup": "./public/index.html",
+        "default_icon": "./icon/PostIt.png"
     },
     "host_permissions": ["http://localhost:5500/*"],
     "permissions": [
