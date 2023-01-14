@@ -4,6 +4,7 @@ const connection = require('./database/connect.js')
 var bodyParser = require('body-parser');
 const dotenv = require('dotenv').config()
 const app = express()
+const cors = require('cors')
 const PORT = 5500
 const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}@cluster0.qwweo4r.mongodb.net/notes?retryWrites=true&w=majority`
 //parse incoming request to json format
@@ -11,6 +12,7 @@ const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static("./public"))
 app.use(express.json())
+app.use(cors())
 app.use("/",router)
 
 const start = async (uri) => {
