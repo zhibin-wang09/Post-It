@@ -1,1 +1,81 @@
 
+body{
+    background-color: #26262b;
+    font-family: monospace;
+}
+
+.save-btn{
+    margin: 10px;
+    display:block;
+    border-style: none;
+    background-color: #e7ffe0;
+    font-size: 0.7 rem;
+    border-radius: 20px;
+}
+
+#text-area{
+    display:block;
+    min-width:500px;
+    margin:10px;    
+    border-radius:5px;
+}
+
+.header{
+    margin-left : 10px;
+    display:grid;
+    min-width:400px;
+    grid-template-columns: 1fr 100px 100px;
+    min-width: 50px;
+}
+.note-title{
+    display:inline-block;
+}
+
+.delete-btn{
+    margin: 10px 10px 10px 0;
+    border-style: none;
+    background-color: #e7ffe0;
+    font-size: 0.7 rem;
+    border-radius:20px;
+}
+
+.edit-btn{
+    margin:10px 10px 10px 10px;
+    border-style: none;
+    background-color: #e7ffe0;
+    font-size: 0.7 rem;
+    border-radius:20px;
+}
+
+#title{
+    margin:10px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.note-history-display{
+    margin:10px;
+    border-style: solid;
+    background-color: white;
+    color: #26262b;
+}
+
+
+
+p{
+    line-height: 200%;
+    margin-left: 10px;
+}
+
+.edit-text-area{
+    display:block;
+    min-width:300px;
+    margin:10px; 
+    border-radius: 5px;
+}
+
+.update-title{
+    margin:10px 10px 10px 0px;
+    border-radius: 5px;
+    padding:5px;
+}
