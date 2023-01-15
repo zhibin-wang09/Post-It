@@ -11,11 +11,25 @@ function Note(props){
 
 //Function component takes props in parameter
 function Header(props){
+  
+  async function handleDelete(e){
+    e.preventDefault()
+    await fetch(`http://localhost:5500/note/${props._id}`, {
+      method: "DELETE"
+    })
+    window.location.reload()
+  }
+
+  function handleEdit(e){
+    e.preventDefault()
+    console.log("EDIT")
+  }
+
   return (
     <div className='header'>
       <h3 className='note-title'>{props.title}</h3>
-      <button className='delete-btn' type='button' data-id={props._id} onClick={() => {console.log("DELETE")}}>Delete Note</button>
-      <button className='edit-btn' type='button' data-id={props._id} onClick={() => {console.log("EDIT")}}>Edit Note</button>
+      <button className='delete-btn' type='button' data-id={props._id} onClick={handleDelete}>Delete Note</button>
+      <button className='edit-btn' type='button' data-id={props._id} onClick={handleEdit}>Edit Note</button>
     </div>
   )
 }
