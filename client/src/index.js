@@ -14,8 +14,8 @@ function Header(props){
   return (
     <div className='header'>
       <h3 className='note-title'>{props.title}</h3>
-      <button className='delete-btn' type='button' data-id={props._id} onClick={() => ({})}>Delete Note</button>
-      <button className='edit-btn' type='button' data-id={props._id} onClick={() => ({})}>Edit Note</button>
+      <button className='delete-btn' type='button' data-id={props._id} onClick={() => {console.log("DELETE")}}>Delete Note</button>
+      <button className='edit-btn' type='button' data-id={props._id} onClick={() => {console.log("EDIT")}}>Edit Note</button>
     </div>
   )
 }
@@ -58,19 +58,57 @@ class NoteContainer extends React.Component{
   }
 }
 
+class Form extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      title : '',
+      note : ''
+    }
+  }
+      
+  setTitle = (e)=> {
+    this.setState({title:e.target.value})
+  }
+
+  setNote = (e) => {
+    this.setState({note:e.target.value})
+  }
+
+  handleSubmit = async (e) => {
+    const note = {
+      title: this.state.title,
+      note: this.state.note
+    }
+    fetch('http://localhost:5500/note' , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(note)
+    })
+  }
+
+  render(){
+    return (
+      <div id="note-taking-area">
+          <form id="noteInfo" onSubmit={this.handleSubmit}>
+              <input id="title" placeholder="name of the note" type="text" name="title" value={this.state.title} onChange ={this.setTitle}/>
+              <textarea id="text-area" name="note" placeholder="notes..." value={this.state.note} onChange={this.setNote}></textarea>
+              <button type="submit" className="save-btn">Save</button>
+          </form>
+      </div>  
+    )
+  }
+}
+
 class Base extends React.Component{
 
 
   render(){
     return(
       <>
-        <div id="note-taking-area">
-          <form id="noteInfo">
-              <input id="title" placeholder="name of the note" type="text" name="title"/>
-              <textarea id="text-area" name="note" placeholder="notes..."></textarea>
-              <button type="submit" className="save-btn" onClick={() => ({})}>Save</button>
-          </form>
-      </div>  
+      <Form/>
       <NoteContainer/>
     </>
     )
