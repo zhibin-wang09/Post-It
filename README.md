@@ -3,3 +3,7 @@ Digital Post it is a simple note-taking extension that allows you to take notes 
 
 ## Disclaimer
 The extension will obtain **informations** on your most **recent** tab **address**. Due to the necessity of fetching notes from the database to obtain the corresponding notes of the website.
+
+
+## Direction
+![Note taken on github.com](./img/Ex1.png?raw=true "Post It on github.com")
