@@ -23,7 +23,7 @@ class Note extends React.Component{
 
   handleEdit = (e) =>{
     e.preventDefault()
-    this.setState({editMode : true,title: this.props.title, note: this.props.content})
+    this.setState({editMode : true, title: this.props.title, note: this.props.content})
   }
 
   handleSave = async (e) => {
@@ -38,6 +38,7 @@ class Note extends React.Component{
           note: this.state.note
       })
     })
+    await this.props.refetch()
     this.setState({editMode: false})
   }
 
@@ -85,9 +86,20 @@ class NoteContainer extends React.Component{
     this.state = {
       notes: []
     }
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   async componentDidMount() {
+    const res = await fetch('http://localhost:5500/note',{
+            method:"GET",
+        })
+    const data = await res.json()
+    this.setState({
+      notes : data.notes
+    })
+  }
+
+  changeData = async() => {
     const res = await fetch('http://localhost:5500/note',{
             method:"GET",
         })
@@ -102,7 +114,7 @@ class NoteContainer extends React.Component{
       return(
         <div className='note-history-display' key={note._id}>
           <form>
-            <Note _id={note._id} title={note.title} content ={note.note}/>
+            <Note _id={note._id} title={note.title} content={note.note} refetch={this.changeData}/>
           </form>
         </div>
       )
