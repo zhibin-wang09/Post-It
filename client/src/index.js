@@ -3,35 +3,41 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 
-function Note(props){
-  return(
-    <p>{props.content}</p>
-  )
-}
-
 //Function component takes props in parameter
-function Header(props){
-  
-  async function handleDelete(e){
+class Note extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      title : this.props.title,
+      note : this.props.note
+    }
+  }
+
+  handleDelete = async(e) => {
     e.preventDefault()
-    await fetch(`http://localhost:5500/note/${props._id}`, {
+    await fetch(`http://localhost:5500/note/${this.props._id}`, {
       method: "DELETE"
     })
     window.location.reload()
   }
 
-  function handleEdit(e){
+  handleEdit = async (e) =>{
     e.preventDefault()
     console.log("EDIT")
   }
 
-  return (
-    <div className='header'>
-      <h3 className='note-title'>{props.title}</h3>
-      <button className='delete-btn' type='button' data-id={props._id} onClick={handleDelete}>Delete Note</button>
-      <button className='edit-btn' type='button' data-id={props._id} onClick={handleEdit}>Edit Note</button>
-    </div>
-  )
+  render(){
+    return (
+    <>
+      <div className='header'>
+        <h3 className='note-title'>{this.props.title}</h3>
+        <button className='delete-btn' type='button' data-id={this.props._id} onClick={this.handleDelete}>Delete Note</button>
+        <button className='edit-btn' type='button' data-id={this.props._id} onClick={this.handleEdit}>Edit Note</button>
+      </div>
+      <p>{this.props.content}</p>
+    </>
+    )
+  }
 }
 
 
@@ -58,8 +64,7 @@ class NoteContainer extends React.Component{
       return(
         <div className='note-history-display' key={note._id}>
           <form>
-            <Header _id={note._id} title={note.title}/>
-            <Note content={note.note}/>
+            <Note _id={note._id} title={note.title} content ={note.note}/>
           </form>
         </div>
       )
