@@ -99,22 +99,12 @@ class NoteContainer extends React.Component{
     })
   }
 
-  changeData = async() => {
-    const res = await fetch('http://localhost:5500/note',{
-            method:"GET",
-        })
-    const data = await res.json()
-    this.setState({
-      notes : data.notes
-    })
-  }
-
   render(){
     const noteFetch = this.state.notes.map((note) => {
       return(
         <div className='note-history-display' key={note._id}>
           <form>
-            <Note _id={note._id} title={note.title} content={note.note} refetch={this.changeData}/>
+            <Note _id={note._id} title={note.title} content={note.note} refetch={this.componentDidMount}/>
           </form>
         </div>
       )
