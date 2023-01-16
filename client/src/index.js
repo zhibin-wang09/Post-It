@@ -9,7 +9,8 @@ class Note extends React.Component{
     super(props)
     this.state = {
       title : this.props.title,
-      note : this.props.note
+      note : this.props.note,
+      editMode : false
     }
   }
 
@@ -21,22 +22,60 @@ class Note extends React.Component{
     window.location.reload()
   }
 
-  handleEdit = async (e) =>{
+  handleEdit = (e) =>{
     e.preventDefault()
-    console.log("EDIT")
+    this.setState({editMode : true,title: this.props.title, note: this.props.content})
   }
 
+  handleSave = async (e) => {
+    e.preventDefault()
+    await fetch(`http://localhost:5500/note/${this.props._id}`, {
+      method: "PATCH",
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          title: this.state.title,
+          note: this.state.note
+      })
+    })
+    window.location.reload()
+  }
+
+  setTitle = (e)=> {
+    this.setState({title:e.target.value})
+  }
+
+  setNote = (e) => {
+    this.setState({note:e.target.value})
+  }
+
+
   render(){
-    return (
-    <>
-      <div className='header'>
-        <h3 className='note-title'>{this.props.title}</h3>
-        <button className='delete-btn' type='button' data-id={this.props._id} onClick={this.handleDelete}>Delete Note</button>
-        <button className='edit-btn' type='button' data-id={this.props._id} onClick={this.handleEdit}>Edit Note</button>
-      </div>
-      <p>{this.props.content}</p>
-    </>
-    )
+    if(!this.state.editMode){
+      return (
+        <>
+          <div className='header'>
+            <h3 className='note-title'>{this.props.title}</h3>
+            <button className='delete-btn' type='button' data-id={this.props._id} onClick={this.handleDelete}>Delete Note</button>
+            <button className='edit-btn' type='button' data-id={this.props._id} onClick={this.handleEdit}>Edit Note</button>
+          </div>
+          <p>{this.props.content}</p>
+        </>
+        )
+    }else{
+      return (
+        <>
+          <div className='header'>
+            <input className='update-title' value={this.state.title} onChange={this.setTitle}/>
+            <button className='delete-btn' type='button' data-id={this.props._id} onClick={this.handleDelete}>Delete Note</button>
+            <button className='edit-btn' type='button' data-id={this.props._id} onClick={this.handleEdit}>Edit Note</button>
+          </div>
+          <textarea className='edit-text-area' value={this.state.note} onChange={this.setNote}></textarea>
+          <button className='save-btn' onClick={this.handleSave}>Update</button>
+        </>
+        )
+    }
   }
 }
 
