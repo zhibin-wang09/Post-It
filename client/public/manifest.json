@@ -1,14 +1,17 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16"
-    }
+  "manifest_version": 3,
+  "name": "Digital Post It",
+  "version": "1.0.1",
+  "action": {
+      "default_popup": "./index.html"
+  },
+  "host_permissions": ["http://localhost:3000/*"],
+  "permissions": [
+      "tabs",
+      "scripting"
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "description" : "Digital Post it is a simple note-taking extension that allows you to take notes on any website. You will never be afraid of losing your note because it is attached to the WEBSITE!!!",
+  "icons": {
+      "16" : "./favicon.ico"
+  }
 }

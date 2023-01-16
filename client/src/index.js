@@ -1,7 +1,13 @@
-
+/*global chrome*/
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
+var url = ""
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+        url = tabs[0].url;
+        const urlobj = new URL(url)
+        url = urlobj.origin
+});
 
 //Function component takes props in parameter
 class Note extends React.Component{
@@ -95,8 +101,13 @@ class NoteContainer extends React.Component{
             method:"GET",
         })
     const data = await res.json()
+    const filtered = data.notes.filter((res) => {
+      if(res.webaddress === url){
+        return res
+      }
+    })
     this.setState({
-      notes : data.notes
+      notes : filtered
     })
   }
 
@@ -123,7 +134,8 @@ class Form extends React.Component{
     super(props)
     this.state = {
       title : '',
-      note : ''
+      note : '',
+      webaddress: url
     }
   }
       
@@ -138,7 +150,8 @@ class Form extends React.Component{
   handleSubmit = async (e) => {
     const note = {
       title: this.state.title,
-      note: this.state.note
+      note: this.state.note,
+      webaddress: url
     }
     fetch('http://localhost:5500/note' , {
       method: 'POST',
