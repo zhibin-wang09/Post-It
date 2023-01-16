@@ -19,7 +19,6 @@ class Note extends React.Component{
     await fetch(`http://localhost:5500/note/${this.props._id}`, {
       method: "DELETE"
     })
-    window.location.reload()
   }
 
   handleEdit = (e) =>{
@@ -39,7 +38,7 @@ class Note extends React.Component{
           note: this.state.note
       })
     })
-    window.location.reload()
+    this.setState({editMode: false})
   }
 
   setTitle = (e)=> {
@@ -161,17 +160,15 @@ class Form extends React.Component{
 }
 
 class Base extends React.Component{
-
-
   render(){
     return(
       <>
       <Form/>
       <NoteContainer/>
-    </>
+      </>
     )
   }
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
-root.render(<Base />)
+root.render(<Base/>)
