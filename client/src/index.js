@@ -19,6 +19,7 @@ class Note extends React.Component{
     await fetch(`http://localhost:5500/note/${this.props._id}`, {
       method: "DELETE"
     })
+    await this.props.refetch()
   }
 
   handleEdit = (e) =>{
