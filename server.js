@@ -12,9 +12,7 @@ const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static("./public"))
 app.use(express.json())
-app.use(cors({
-    origin :["http://localhost:3000","https://Post-It-Zhibin-Wang09.onrender.com"]
-}))
+app.use(cors())
 app.use("/",router)
 
 const start = async (uri) => {
