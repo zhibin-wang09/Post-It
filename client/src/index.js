@@ -22,7 +22,7 @@ class Note extends React.Component{
 
   handleDelete = async(e) => {
     e.preventDefault()
-    await fetch(`http://localhost:5500/note/${this.props._id}`, {
+    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "DELETE"
     })
     await this.props.refetch()
@@ -35,7 +35,7 @@ class Note extends React.Component{
 
   handleSave = async (e) => {
     e.preventDefault()
-    await fetch(`http://localhost:5500/note/${this.props._id}`, {
+    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "PATCH",
       headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ class NoteContainer extends React.Component{
   }
 
   async componentDidMount() {
-    const res = await fetch('http://localhost:5500/note',{
+    const res = await fetch('https://post-it-api.onrender.com/note',{
             method:"GET",
         })
     const data = await res.json()
@@ -153,7 +153,7 @@ class Form extends React.Component{
       note: this.state.note,
       webaddress: url
     }
-    fetch('http://localhost:5500/note' , {
+    fetch('https://post-it-api.onrender.com/note' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
