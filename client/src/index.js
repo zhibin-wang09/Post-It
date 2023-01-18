@@ -153,7 +153,7 @@ class Form extends React.Component{
       note: this.state.note,
       webaddress: url
     }
-    fetch('https://post-it-api.onrender.com/note' , {
+    await fetch('https://post-it-api.onrender.com/note' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
