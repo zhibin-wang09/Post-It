@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 var url = ""
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         url = tabs[0].url;
         const urlobj = new URL(url)
         url = urlobj.origin
@@ -22,7 +22,7 @@ class Note extends React.Component{
 
   handleDelete = async(e) => {
     e.preventDefault()
-    await fetch(`https://localhost/note/${this.props._id}`, {
+    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "DELETE"
     })
     await this.props.refetch()
@@ -35,7 +35,7 @@ class Note extends React.Component{
 
   handleSave = async (e) => {
     e.preventDefault()
-    await fetch(`https://localhost/note/${this.props._id}`, {
+    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "PATCH",
       headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ class NoteContainer extends React.Component{
   }
 
   async componentDidMount() {
-    const res = await fetch('https://localhost/note',{
+    const res = await fetch('https://post-it-api.onrender.com/note',{
             method:"GET",
         })
     const data = await res.json()
@@ -153,7 +153,7 @@ class Form extends React.Component{
       note: this.state.note,
       webaddress: url
     }
-    await fetch('https://localhost/note' , {
+    await fetch('https://post-it-api.onrender.com/note' , {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
