@@ -164,6 +164,7 @@ class Form extends React.Component{
   }
 
   handleSubmit = async (e) => {
+    e.preventDefault()
     const note = {
       title: this.state.title,
       note: this.state.note,
