@@ -7,6 +7,7 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         url = tabs[0].url;
         const urlobj = new URL(url)
         url = urlobj.origin
+        console.log(url)
 });
 
 //Function component takes props in parameter
@@ -22,9 +23,14 @@ class Note extends React.Component{
 
   handleDelete = async(e) => {
     e.preventDefault()
-    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
+    try {
+      const res = await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "DELETE"
-    })
+      })
+      console.log("DELETE SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
     await this.props.refetch()
   }
 
@@ -35,7 +41,8 @@ class Note extends React.Component{
 
   handleSave = async (e) => {
     e.preventDefault()
-    await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
+    try {
+      const res = await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "PATCH",
       headers: {
           'Content-Type': 'application/json',
@@ -44,7 +51,11 @@ class Note extends React.Component{
           title: this.state.title,
           note: this.state.note
       })
-    })
+      })
+      console.log("PACTCH SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
     await this.props.refetch()
     this.setState({editMode: false})
   }
@@ -97,18 +108,23 @@ class NoteContainer extends React.Component{
   }
 
   async componentDidMount() {
-    const res = await fetch('https://post-it-api.onrender.com/note',{
+    try {
+      const res = await fetch('https://post-it-api.onrender.com/note',{
             method:"GET",
-        })
-    const data = await res.json()
-    const filtered = data.notes.filter((res) => {
-      if(res.webaddress === url){
-        return res
-      }
-    })
-    this.setState({
-      notes : filtered
-    })
+      })
+      const data = await res.json()
+      const filtered = data.notes.filter((res) => {
+        if(res.webaddress === url){
+          return res
+        }
+      })
+      this.setState({
+        notes : filtered
+      })
+      console.log("GET SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render(){
@@ -153,13 +169,18 @@ class Form extends React.Component{
       note: this.state.note,
       webaddress: url
     }
-    await fetch('https://post-it-api.onrender.com/note' , {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(note)
-    })
+    try {
+      await fetch('https://post-it-api.onrender.com/note' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(note)
+      })
+      console.log("POST SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render(){
