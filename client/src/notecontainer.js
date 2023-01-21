@@ -13,46 +13,10 @@ class NoteContainer extends React.Component{
       super(props)
       this.state = {
         notes: [],
-        title : '',
-        note : '',
-        webaddress: url
       }
       this.componentDidMount = this.componentDidMount.bind(this)
     }
   
-    setTitle = (e)=> {
-      this.setState({title:e.target.value})
-    }
-  
-    setNote = (e) => {
-      this.setState({note:e.target.value})
-    }
-  
-    handleSubmit = async (e) => {
-      e.preventDefault()
-      const note = {
-        title: this.state.title,
-        note: this.state.note,
-        webaddress: url
-      }
-      try {
-        await fetch('https://post-it-api.onrender.com/note' , {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(note)
-        })
-        console.log("POST SUCCESS")
-        this.setState({
-          title:'',
-          note: ''
-        })
-        this.componentDidMount()
-      } catch (error) {
-        console.log(error)
-      }
-    }
   
     async componentDidMount() {
       try {
@@ -85,18 +49,9 @@ class NoteContainer extends React.Component{
         )
       })
       return (
-        <>
-          <div id="note-taking-area">
-            <form id="noteInfo" onSubmit={this.handleSubmit}>
-                <input id="title" placeholder="name of the note" type="text" name="title" value={this.state.title} onChange ={this.setTitle}/>
-                <textarea id="text-area" name="note" placeholder="notes..." value={this.state.note} onChange={this.setNote}></textarea>
-                <button type="submit" className="save-btn">Save</button>
-            </form>
-          </div>  
           <div className='note-history-display-container'>
             {noteFetch}
           </div>
-        </>
       )
     }
 }
