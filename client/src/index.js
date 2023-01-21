@@ -94,27 +94,22 @@ class NoteContainer extends React.Component{
     this.state = {
       notes: []
     }
-    this.fetchData = this.fetchData.bind(this)
+    this.componentDidMount = this.componentDidMount.bind(this)
   }
 
   async componentDidMount() {
-    try {
-      const res = await fetch('https://post-it-api.onrender.com/note',{
+    const res = await fetch('https://localhost/note',{
             method:"GET",
-      })
-      const data = await res.json()
-      const filtered = data.notes.filter((res) => {
-        if(res.webaddress === url){
-          return res
-        }
-      })
-      this.setState({
-        notes : filtered
-      })
-      console.log("GET SUCCESS")
-    } catch (error) {
-      console.log(error)
-    }
+        })
+    const data = await res.json()
+    const filtered = data.notes.filter((res) => {
+      if(res.webaddress === url){
+        return res
+      }
+    })
+    this.setState({
+      notes : filtered
+    })
   }
 
   render(){
@@ -135,7 +130,7 @@ class NoteContainer extends React.Component{
   }
 }
 
-/* class Form extends React.Component{
+class Form extends React.Component{
   constructor(props){
     super(props)
     this.state = {
@@ -154,24 +149,18 @@ class NoteContainer extends React.Component{
   }
 
   handleSubmit = async (e) => {
-    e.preventDefault()
     const note = {
       title: this.state.title,
       note: this.state.note,
       webaddress: url
     }
-    try {
-      await fetch('https://post-it-api.onrender.com/note' , {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(note)
-      })
-      console.log("POST SUCCESS")
-    } catch (error) {
-      console.log(error)
-    }
+    await fetch('https://localhost/note' , {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(note)
+    })
   }
 
   render(){
@@ -185,7 +174,7 @@ class NoteContainer extends React.Component{
       </div>  
     )
   }
-} */
+}
 
 class Base extends React.Component{
   render(){
