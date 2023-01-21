@@ -8,6 +8,7 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         url = urlobj.origin
         console.log(url)
 });
+
 class NoteContainer extends React.Component{
     constructor(props){
       super(props)
