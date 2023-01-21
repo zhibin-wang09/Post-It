@@ -107,7 +107,7 @@ class NoteContainer extends React.Component{
       note : '',
       webaddress: url
     }
-    this.componentDidMount = this.componentDidMount.bind(this)
+    this.fetchData = this.fetchData.bind(this)
   }
 
   setTitle = (e)=> {
@@ -144,10 +144,10 @@ class NoteContainer extends React.Component{
     }
   }
 
-  async componentDidMount() {
+  async fetchData(){
     try {
       const res = await fetch('https://post-it-api.onrender.com/note',{
-            method:"GET",
+        method: 'GET',
       })
       const data = await res.json()
       const filtered = data.notes.filter((res) => {
@@ -156,8 +156,16 @@ class NoteContainer extends React.Component{
         }
       })
       this.setState({
-        notes : filtered
+        notes: filtered
       })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      this.fetchData()
       console.log("GET SUCCESS")
     } catch (error) {
       console.log(error)
@@ -169,7 +177,7 @@ class NoteContainer extends React.Component{
       return(
         <div className='note-history-display' key={note._id}>
           <form>
-            <Note _id={note._id} title={note.title} content={note.note} refetch={this.componentDidMount}/>
+            <Note _id={note._id} title={note.title} content={note.note} refetch={this.fetchData}/>
           </form>
         </div>
       )
@@ -190,58 +198,6 @@ class NoteContainer extends React.Component{
     )
   }
 }
-
-/* class Form extends React.Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      title : '',
-      note : '',
-      webaddress: url
-    }
-  }
-      
-  setTitle = (e)=> {
-    this.setState({title:e.target.value})
-  }
-
-  setNote = (e) => {
-    this.setState({note:e.target.value})
-  }
-
-  handleSubmit = async (e) => {
-    e.preventDefault()
-    const note = {
-      title: this.state.title,
-      note: this.state.note,
-      webaddress: url
-    }
-    try {
-      await fetch('https://post-it-api.onrender.com/note' , {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(note)
-      })
-      console.log("POST SUCCESS")
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  render(){
-    return (
-      <div id="note-taking-area">
-          <form id="noteInfo" onSubmit={this.handleSubmit}>
-              <input id="title" placeholder="name of the note" type="text" name="title" value={this.state.title} onChange ={this.setTitle}/>
-              <textarea id="text-area" name="note" placeholder="notes..." value={this.state.note} onChange={this.setNote}></textarea>
-              <button type="submit" className="save-btn">Save</button>
-          </form>
-      </div>  
-    )
-  }
-} */
 
 class Base extends React.Component{
   render(){
