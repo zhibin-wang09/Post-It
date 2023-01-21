@@ -2,12 +2,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Note from './note.js'
 var url = ""
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
         url = tabs[0].url;
         const urlobj = new URL(url)
         url = urlobj.origin
+        console.log(url)
 });
 
 //Function component takes props in parameter
@@ -23,9 +23,14 @@ class Note extends React.Component{
 
   handleDelete = async(e) => {
     e.preventDefault()
-    await fetch(`https://localhost/note/${this.props._id}`, {
+    try {
+      const res = await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "DELETE"
-    })
+      })
+      console.log("DELETE SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
     await this.props.refetch()
   }
 
@@ -36,7 +41,8 @@ class Note extends React.Component{
 
   handleSave = async (e) => {
     e.preventDefault()
-    await fetch(`https://localhost/note/${this.props._id}`, {
+    try {
+      const res = await fetch(`https://post-it-api.onrender.com/note/${this.props._id}`, {
       method: "PATCH",
       headers: {
           'Content-Type': 'application/json',
@@ -45,7 +51,11 @@ class Note extends React.Component{
           title: this.state.title,
           note: this.state.note
       })
-    })
+      })
+      console.log("PACTCH SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
     await this.props.refetch()
     this.setState({editMode: false})
   }
@@ -92,24 +102,66 @@ class NoteContainer extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      notes: []
+      notes: [],
+      title : '',
+      note : '',
+      webaddress: url
     }
     this.componentDidMount = this.componentDidMount.bind(this)
   }
 
+  setTitle = (e)=> {
+    this.setState({title:e.target.value})
+  }
+
+  setNote = (e) => {
+    this.setState({note:e.target.value})
+  }
+
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    const note = {
+      title: this.state.title,
+      note: this.state.note,
+      webaddress: url
+    }
+    try {
+      await fetch('https://post-it-api.onrender.com/note' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(note)
+      })
+      console.log("POST SUCCESS")
+      this.setState({
+        title:'',
+        note: ''
+      })
+      this.componentDidMount()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   async componentDidMount() {
-    const res = await fetch('https://localhost/note',{
+    try {
+      const res = await fetch('https://post-it-api.onrender.com/note',{
             method:"GET",
-        })
-    const data = await res.json()
-    const filtered = data.notes.filter((res) => {
-      if(res.webaddress === url){
-        return res
-      }
-    })
-    this.setState({
-      notes : filtered
-    })
+      })
+      const data = await res.json()
+      const filtered = data.notes.filter((res) => {
+        if(res.webaddress === url){
+          return res
+        }
+      })
+      this.setState({
+        notes : filtered
+      })
+      console.log("GET SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render(){
@@ -117,20 +169,29 @@ class NoteContainer extends React.Component{
       return(
         <div className='note-history-display' key={note._id}>
           <form>
-            <Note _id={note._id} title={note.title} content={note.note} refetch={this.fetchData}/>
+            <Note _id={note._id} title={note.title} content={note.note} refetch={this.componentDidMount}/>
           </form>
         </div>
       )
     })
     return (
-      <div className='note-history-display-container'>
-        {noteFetch}
-      </div>
+      <>
+        <div id="note-taking-area">
+          <form id="noteInfo" onSubmit={this.handleSubmit}>
+              <input id="title" placeholder="name of the note" type="text" name="title" value={this.state.title} onChange ={this.setTitle}/>
+              <textarea id="text-area" name="note" placeholder="notes..." value={this.state.note} onChange={this.setNote}></textarea>
+              <button type="submit" className="save-btn">Save</button>
+          </form>
+        </div>  
+        <div className='note-history-display-container'>
+          {noteFetch}
+        </div>
+      </>
     )
   }
 }
 
-class Form extends React.Component{
+/* class Form extends React.Component{
   constructor(props){
     super(props)
     this.state = {
@@ -143,26 +204,29 @@ class Form extends React.Component{
   setTitle = (e)=> {
     this.setState({title:e.target.value})
   }
-
   setNote = (e) => {
     this.setState({note:e.target.value})
   }
-
   handleSubmit = async (e) => {
+    e.preventDefault()
     const note = {
       title: this.state.title,
       note: this.state.note,
       webaddress: url
     }
-    await fetch('https://localhost/note' , {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(note)
-    })
+    try {
+      await fetch('https://post-it-api.onrender.com/note' , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(note)
+      })
+      console.log("POST SUCCESS")
+    } catch (error) {
+      console.log(error)
+    }
   }
-
   render(){
     return (
       <div id="note-taking-area">
@@ -174,13 +238,12 @@ class Form extends React.Component{
       </div>  
     )
   }
-}
+} */
 
 class Base extends React.Component{
   render(){
     return(
       <>
-      <Form/>
       <NoteContainer/>
       </>
     )
