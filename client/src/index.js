@@ -49,6 +49,7 @@ class Base extends React.Component{
         title:'',
         note: ''
       })
+      window.location.reload()
     } catch (error) {
       console.log(error)
     }
