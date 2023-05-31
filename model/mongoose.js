@@ -1,3 +1,7 @@
+/* 
+    This is the model of the application, where it defines the data of the application that it is 
+    operating on. 
+*/
 const mongoose = require('mongoose')
 
 

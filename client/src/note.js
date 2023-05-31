@@ -1,3 +1,7 @@
+/**
+ * This a part of the view component of the MVC model. This file construct the note
+ * component where obtians the model data and display it to the view component.
+ */
 import React from 'react'
 
 class Note extends React.Component{

@@ -1,3 +1,8 @@
+/**
+ * This file contains the top level logic for the REST api. 
+ * Where it invokes the appropriate CRUD operation base on the 
+ * URL and query. 
+ */
 const express = require('express')
 const router = express.Router()
 const {getAllNote,

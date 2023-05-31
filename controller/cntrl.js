@@ -1,3 +1,12 @@
+/**
+ * This is the controller of the application, where it contains the 
+ * logic of the application and manipulates or updates the model. Base
+ * on the user input received from the view.
+ * 
+ * 
+ */
+
+
 const mongoose = require('mongoose')
 const note = require('../model/mongoose.js')
 

@@ -1,3 +1,8 @@
+/**
+ * This file is the file that starts the mongodb server and the local host server. 
+ * This allows any request to the localhost or whatever URL the server is hosted on
+ * to be able to handle request from the user.
+ */
 const express = require('express')
 const router = require('./router/route.js')
 const connection = require('./database/connect.js')
