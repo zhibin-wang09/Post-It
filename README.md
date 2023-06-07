@@ -10,14 +10,15 @@ The extension will obtain **informations** on your most **recent** tab **address
 3) Create a database on Mongodb (check mongodb website for instruction)
 4) Copy the connection string and replace the connection string with the string named "URI" in server.js file
 5) Create a .env file in the same directory as the server.js
-6) Enter your unique USER_NAME and USER_PASSWORD string from mongodb to .env file (Check mongodb for information about the two strings)
-7) Head into client folder
-8) type "npm install" then "npm run build"
-11) Head over to chrome
-12) Manage extension
-13) Toggle on developer mode
-14) Load unpack the client folder
-15) You're good to go.
+6) Find the URI connection string from your mongodb database(https://www.mongodb.com/docs/manual/reference/connection-string/)
+7) Enter your unique USER_NAME and USER_PASSWORD string from mongodb to .env file (Check mongodb for information about the two strings)
+8) Head into client folder
+9) type "npm install" then "npm run build"
+10) Head over to chrome
+11) Manage extension
+12) Toggle on developer mode
+13) Load unpack the client folder
+14) You're good to go.
 
 ## Direction ##
 ![Note taken on github.com](./img/Ex1.png?raw=true "Post It on github.com")
