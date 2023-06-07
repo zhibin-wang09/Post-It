@@ -20,6 +20,7 @@ class Base extends React.Component{
       note: '',
       webaddress: url
     }
+    this.persistNote = null
   }
   setTitle = (e)=> {
     this.setState({title:e.target.value})
@@ -36,6 +37,7 @@ class Base extends React.Component{
       note: this.state.note,
       webaddress: url
     }
+    this.persistNote = structuredClone(note)
     try {
       await fetch('https://post-it-api.onrender.com/note' , {
         method: 'POST',
@@ -65,7 +67,7 @@ class Base extends React.Component{
                 <button type="submit" className="save-btn">Save</button>
             </form>
       </div>  
-      <NoteContainer/>
+      <NoteContainer note = {this.persistNote}/>
       </>
     )
   }

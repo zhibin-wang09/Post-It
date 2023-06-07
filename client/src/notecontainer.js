@@ -30,6 +30,8 @@ class NoteContainer extends React.Component{
             return res
           }
         })
+        console.log("Newly added props")
+        filtered.concat([this.props.note])
         this.setState({
           notes : filtered
         })
