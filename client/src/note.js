@@ -5,7 +5,7 @@
 import React from 'react'
 import {useState} from 'react'
 
-function Note({_id, title, content, handleDelete}){
+function Note({_id, title, content, handleDelete,handleUpdate}){
   const[editMode, setEditMode] = useState(false)
   const[titleState, setTitle] = useState(title)
   const[contentState, setContent] = useState(content)
@@ -28,15 +28,18 @@ function Note({_id, title, content, handleDelete}){
       )
   }else{
     return (
-      <>
-        <div className='header'>
-          <input name='title' className='update-title' value={titleState} onChange={(e) => setTitle(e.target.value)}/>
-          <button className='delete-btn' type='button' data-id={_id} onClick={handleDelete}>Delete Note</button>
-          <button className='edit-btn' type='button' data-id={_id} onClick={handleEdit}>Edit Note</button>
-        </div>
-        <textarea name='note' className='edit-text-area' value={contentState}  onChange={(e) => setContent(e.target.value)}></textarea>
-        <button type="submit" className='save-btn' >Update</button>
-      </>
+       <form onSubmit={(e) => {
+        setEditMode(false)
+        handleUpdate(e,_id)
+       }}>
+          <div className='header'>
+            <input name='title' className='update-title' value={titleState} onChange={(e) => setTitle(e.target.value)}/>
+            <button className='delete-btn' type='button' data-id={_id} onClick={handleDelete}>Delete Note</button>
+            <button className='edit-btn' type='button' data-id={_id} onClick={handleEdit}>Edit Note</button>
+          </div>
+          <textarea name='note' className='edit-text-area' value={contentState}  onChange={(e) => setContent(e.target.value)}></textarea>
+          <button type="submit" className='save-btn' >Update</button>
+       </form>
       )
   }
 }

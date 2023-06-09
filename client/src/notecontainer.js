@@ -103,12 +103,13 @@ function NoteContainer(){
     handleDelete(id)
   }
 
+  async function handleUpdateWrapper(e,id){
+    handleUpdate(e,id)
+  }
   const generateNote = () => notes.map((note) => {
       return(
         <div className='note-history-display' key={note._id}>
-          <form onSubmit={(e) => handleUpdate(e, note._id)}>
-            <Note key = {note._id} _id={note._id} title={note.title} content={note.note} handleDelete={()=>handleDeleteWrapper(note._id)}/>
-          </form>
+            <Note key = {note._id} _id={note._id} title={note.title} content={note.note} handleDelete={()=>handleDeleteWrapper(note._id)} handleUpdate= {(e) => handleUpdateWrapper(e,note._id)}/>
         </div>
       )
   })
