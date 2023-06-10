@@ -20,7 +20,7 @@ function Note({_id, title, content, handleDelete,handleUpdate}){
       <>
         <div className='header'>
           <h3 className='note-title'>{title}</h3>
-          <button className='delete-btn' type='button' data-id={_id} onClick={handleDelete}>Delete Note</button>
+          <button className='delete-btn' type='button' data-id={_id} onClick={(e) => handleDelete(e,_id)}>Delete Note</button>
           <button className='edit-btn' type='button' data-id={_id} onClick={handleEdit}>Edit Note</button>
         </div>
         <p>{content}</p>
@@ -34,7 +34,7 @@ function Note({_id, title, content, handleDelete,handleUpdate}){
        }}>
           <div className='header'>
             <input name='title' className='update-title' value={titleState} onChange={(e) => setTitle(e.target.value)}/>
-            <button className='delete-btn' type='button' data-id={_id} onClick={handleDelete}>Delete Note</button>
+            <button className='delete-btn' type='button' data-id={_id} onClick={(e) => handleDelete(e,_id)}>Delete Note</button>
             <button className='edit-btn' type='button' data-id={_id} onClick={handleEdit}>Edit Note</button>
           </div>
           <textarea name='note' className='edit-text-area' value={contentState}  onChange={(e) => setContent(e.target.value)}></textarea>

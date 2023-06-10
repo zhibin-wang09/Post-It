@@ -40,13 +40,15 @@ function NoteContainer(){
       webaddress: url
     }
     try {
-      await fetch('https://post-it-api.onrender.com/note' , {
+      const res = await fetch('https://post-it-api.onrender.com/note' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(note)
       })
+      const resJson = await res.json ();
+      note._id = resJson._id
       console.log("POST SUCCESS")
       setNotes([...notes, note])
       e.target.reset()
@@ -55,8 +57,9 @@ function NoteContainer(){
     }
   }
   
-  async function handleDelete(id){
+  async function handleDelete(e,id){
     try {
+      e.stopPropagation();
       await fetch(`https://post-it-api.onrender.com/note/${id}`, {
       method: "DELETE"
       })
@@ -99,17 +102,13 @@ function NoteContainer(){
     }
   }
 
-  async function handleDeleteWrapper(id){
-    handleDelete(id)
-  }
-
   async function handleUpdateWrapper(e,id){
     handleUpdate(e,id)
   }
   const generateNote = () => notes.map((note) => {
       return(
         <div className='note-history-display' key={note._id}>
-            <Note key = {note._id} _id={note._id} title={note.title} content={note.note} handleDelete={()=>handleDeleteWrapper(note._id)} handleUpdate= {(e) => handleUpdateWrapper(e,note._id)}/>
+            <Note key = {note._id} _id={note._id} title={note.title} content={note.note} handleDelete={(e,id) => handleDelete(e,id)} handleUpdate= {(e,id) => handleUpdateWrapper(e,id)}/>
         </div>
       )
   })
@@ -129,6 +128,4 @@ function NoteContainer(){
     </>
   )
 }
-
-//export default NoteContainer
  export default NoteContainer
