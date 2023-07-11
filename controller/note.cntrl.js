@@ -12,7 +12,7 @@ const note = require('../model/note.model.js')
 
 const getAllNote = async (req,res)=> {
     try {
-        const data = await note.find({})
+        const data = await note.find({userId: req.identifier})
         res.status(200).json({msg:"Get success", notes: data})
     } catch (error) {
         res.status(400).json({msg:"Failed",error:error})
@@ -24,6 +24,7 @@ const postNote = async (req,res) => {
         const title = req.body.title
         const noteContent = req.body.note
         const createdNote = await note.create({
+            userId: req.identifier,
             title:title, 
             note:noteContent,
             webaddress: req.body.webaddress

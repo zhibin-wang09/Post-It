@@ -38,18 +38,24 @@ signin = async (req,res) => {
     }
 
     // create a jwt token
-    const token = jwt.sign({id: userInDB.id}, 
+    const token = jwt.sign({id: userInDB._id}, 
                             config.secret,
                             {
                                 algorithm: 'HS256',
                                 allowInsecureKeySizes: true,
                                 expiresIn: 86400*30
                             })
-    
+    const identifier = jwt.sign({user: userInDB._id},
+                                config.secret,
+                                {
+                                    algorithm : 'HS256',
+                                    noTimestamp: true
+                                })
     // res.cookie("access-token", token, {
     //     maxAge: 86400*30
     // })
     req.session.token = token;
+    req.session.identifier = identifier
     
     res.status(200).send({message: "Logged in"})
 }
