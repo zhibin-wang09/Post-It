@@ -1,3 +1,4 @@
-module.export = {
-    secret: "zhibin-secret-key"
+const dotenv = require('dotenv').config()
+module.exports = {
+    secret: process.env.SECRET_KEY
 }
