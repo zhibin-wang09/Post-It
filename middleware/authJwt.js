@@ -14,8 +14,8 @@ const User = db.user
 
 verifyToken = (req,res,next) => {
     let token = req.session.token
-    
-    if(!token){
+    let identifier = req.session.identifier
+    if(!token || !identifier){
         return res.status(403).send({message: "User not authenticated!"})
     }
 
@@ -23,7 +23,13 @@ verifyToken = (req,res,next) => {
         if(err){
             return res.status(401).send({message: "User is not unauthorized!"})
         }
-        req.userId = decoded.userId
+        jwt.verify(identifier, config.secret,(err,decoded) => {
+            if(err){
+                return res.status(401).send({message: "User is not unauthorized!"})
+            }
+            req.identifier = decoded.user
+            console.log(decoded.user)
+        })
         next();
     })
 } 
