@@ -5,7 +5,8 @@
  */
 const express = require('express')
 const router = require('./router/route.js')
-const connection = require('./database/connect.js')
+const db = require('./database/connect.js')
+const cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
 const dotenv = require('dotenv').config()
 const app = express()
@@ -15,20 +16,26 @@ const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}
 //parse incoming request to json format
 //app.set('view engine','ejs')
 app.use(bodyParser.urlencoded({ extended: true })); 
-app.use(express.static("./public"))
+//app.use(express.static("./public"))
 app.use(express.json())
 app.use(cors())
+app.use(cookieSession({
+    name: "session",
+    keys: [process.env.COOKIE_SECRET], // should use as secret environment variable
+    httpOnly: true
+})) 
 app.use("/",router)
 
 const start = async (uri) => {
     try {
-        await connection(uri)
+        await db.connect(uri)
         console.log("Connected to database")
         app.listen(PORT, (err)=>{
             if(err) console.log(err)
             console.log(`Listening on port ${PORT} at http://localhost:${PORT}...`)
         })
     } catch (error) {
+        console.log("Failed to connect to database")
     }
 }
 
