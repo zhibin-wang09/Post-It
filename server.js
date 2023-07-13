@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static("./public"))
 app.use(express.json())
 app.use(cors({
-    origin:["http://localhost:3000", "chrome-extension://"],
+    origin:["http://localhost:3000", "chrome-extension://gadcdadeohomkdklbianclbhhokflaea"],
     credentials:true // 
 }))
 app.use(cookieParser())
