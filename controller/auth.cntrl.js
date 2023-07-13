@@ -54,10 +54,14 @@ signin = async (req,res) => {
     res.cookie("access-token", token, {
         maxAge : 60 * 60 * 24 * 30 * 1000,
         httpOnly: true,
+        sameSite: 'none',
+        secure: true
     })
     res.cookie("identifier", identifier, {
         maxAge : 60 * 60 * 24 * 30 * 1000,
         httpOnly: true,
+        sameSite: 'none',
+        secure: true
     })
     res.status(200).send({message: "Logged in"})
 }
