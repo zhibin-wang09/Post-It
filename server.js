@@ -6,11 +6,11 @@
 const express = require('express')
 const router = require('./router/route.js')
 const db = require('./database/connect.js')
-const cookieSession = require('cookie-session')
 var bodyParser = require('body-parser');
 const dotenv = require('dotenv').config()
 const app = express()
-const cors = require('cors')
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const PORT = 5500
 const URI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASSWORD}@cluster0.qwweo4r.mongodb.net/notes?retryWrites=true&w=majority`
 //parse incoming request to json format
@@ -19,11 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static("./public"))
 app.use(express.json())
 app.use(cors())
-app.use(cookieSession({
-    name: "session",
-    keys: [process.env.COOKIE_SECRET], // should use as secret environment variable
-    httpOnly: true
-})) 
+app.use(cookieParser())
 app.use("/",router)
 
 const start = async (uri) => {

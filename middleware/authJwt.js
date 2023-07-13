@@ -13,8 +13,9 @@ const db = require("../database/connect.js")
 const User = db.user 
 
 verifyToken = (req,res,next) => {
-    let token = req.session.token
-    let identifier = req.session.identifier
+    let token = req.cookies["access-token"]
+    let identifier = req.cookies["identifier"]
+
     if(!token || !identifier){
         return res.status(403).send({message: "User not authenticated!"})
     }
@@ -28,7 +29,6 @@ verifyToken = (req,res,next) => {
                 return res.status(401).send({message: "User is not unauthorized!"})
             }
             req.identifier = decoded.user
-            console.log(decoded.user)
         })
         next();
     })

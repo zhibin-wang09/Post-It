@@ -42,8 +42,8 @@ signin = async (req,res) => {
                             config.secret,
                             {
                                 algorithm: 'HS256',
-                                allowInsecureKeySizes: true,
-                                expiresIn: 86400*30
+                                // allowInsecureKeySizes: true,
+                                // expiresIn: 86400*30
                             })
     const identifier = jwt.sign({user: userInDB._id},
                                 config.secret,
@@ -51,17 +51,21 @@ signin = async (req,res) => {
                                     algorithm : 'HS256',
                                     noTimestamp: true
                                 })
-    // res.cookie("access-token", token, {
-    //     maxAge: 86400*30
-    // })
-    req.session.token = token;
-    req.session.identifier = identifier
-    
+    res.cookie("access-token", token, {
+        maxAge : 60 * 60 * 24 * 30 * 1000,
+        httpOnly: true
+    })
+    res.cookie("identifier", identifier, {
+        maxAge : 60 * 60 * 24 * 30 * 1000,
+        httpOnly: true
+    })
     res.status(200).send({message: "Logged in"})
 }
 
 signout = async(req, res) => {
     try{
+        res.clearCookie("access-token")
+        res.clearCookie("identifier")
         req.session = null
         return res.status(200).send({message: "You have been signed out!"})
     }catch(err){
