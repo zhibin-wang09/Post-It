@@ -35,6 +35,7 @@ const start = async (uri) => {
         })
     } catch (error) {
         console.log("Failed to connect to database")
+        console.log(error)
     }
 }
 
