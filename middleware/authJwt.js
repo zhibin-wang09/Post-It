@@ -7,8 +7,6 @@
  * • check user roles in database
  */
 
-const chrome = window.chrome
-
 const jwt = require("jsonwebtoken")
 const config = require("../config/auth.config.js")
 const db = require("../database/connect.js")
@@ -17,15 +15,6 @@ const User = db.user
 verifyToken = (req,res,next) => {
     let token = req.cookies["access-token"]
     let identifier = req.cookies["identifier"]
-    if(chrome){
-        chrome.get({name:"identifier"}, (cookie) => {
-            identifier = cookie
-        })
-
-        chrome.get({name: "access-token"}, (cookie) => {
-            token = cookie
-        })
-    }
 
     if(!token || !identifier){
         return res.status(403).send({message: "User not authenticated!"})
