@@ -20,7 +20,7 @@ function NoteContainer(){
 
   useEffect(() => {
     async function fetchNote(){
-      const res = await fetch('https://post-it-api.onrender.com/note',{
+      const res = await fetch('https://post-it-upgrade.onrender.com/note',{
         method:"GET",
       })
       const data = await res.json()
@@ -40,7 +40,7 @@ function NoteContainer(){
       webaddress: url
     }
     try {
-      const res = await fetch('https://post-it-api.onrender.com/note' , {
+      const res = await fetch('https://post-it-upgrade.onrender.com/note' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ function NoteContainer(){
   async function handleDelete(e,id){
     try {
       e.stopPropagation();
-      await fetch(`https://post-it-api.onrender.com/note/${id}`, {
+      await fetch(`https://post-it-upgrade.onrender.com/note/${id}`, {
       method: "DELETE"
       })
       console.log("DELETE SUCCESS")
@@ -73,7 +73,7 @@ function NoteContainer(){
   async function handleUpdate(e,id){
     try {
       e.preventDefault()
-      await fetch(`https://post-it-api.onrender.com/note/${id}`, {
+      await fetch(`https://post-it-upgrade.onrender.com/note/${id}`, {
       method: "PATCH",
       headers: {
           'Content-Type': 'application/json',
