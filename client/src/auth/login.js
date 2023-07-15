@@ -1,8 +1,9 @@
 /*global chrome*/
 import React from 'react'
+import {useState} from 'react'
 
 function Login(){
-
+    const [status, setStatus] = useState("")
     async function handleSubmit(e){
         console.log("Logging...!")
         e.preventDefault()
@@ -36,7 +37,7 @@ function Login(){
             //     }
             // });
             chrome.cookies.set({
-                url: "https://post-it-upgrade.onrender.com/signin",
+                url: "http://localhost:3000/",
                 name: "access-token",
                 value: resJson.accesstoken,
                 httpOnly: true,
@@ -46,7 +47,7 @@ function Login(){
             });
               
             chrome.cookies.set({
-                url: "https://post-it-upgrade.onrender.com/signin",
+                url: "http://localhost:3000/",
                 name: "identifierToken",
                 value: resJson.identifierToken,
                 httpOnly: true,
@@ -55,19 +56,24 @@ function Login(){
                 expirationDate: 60 * 60 * 24 * 30 * 1000
             });
             e.target.reset()
+            setStatus(resJson.message)
         }catch(err){
-            console.log(err)
+            console.log(err.message)
+            setStatus("Loggin in failed" + err.message)
         }
     }
 
     return (
-        <div id="login">
-            <form onSubmit={handleSubmit}>
-                <input className='username-field' name="username" placeholder='username' type='text' required></input>
-                <input className='password-field' name="password" placeholder='password' type='password' required></input>
-                <button type="submit">Login</button>
-            </form>
-        </div>
+        <>
+            <div id="login">
+                <form onSubmit={handleSubmit}>
+                    <input className='username-field' name="username" placeholder='username' type='text' required></input>
+                    <input className='password-field' name="password" placeholder='password' type='password' required></input>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+            <strong><i>{status}</i></strong>
+        </>
     )
 }
 
