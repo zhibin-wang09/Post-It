@@ -9,7 +9,8 @@ function NoteContainer(){
   const[notes, setNotes] = useState([])
   const[url, setUrl] = useState('')
   useEffect(() => {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+    chrome.tabs.query({ active: true/*, lastFocusedWindow: true */ }, (tabs) => {
+      console.log(tabs)
       const tabUrl = tabs[0].url;
       const urlObj = new URL(tabUrl);
       const originUrl = urlObj.origin;
