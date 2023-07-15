@@ -8,6 +8,7 @@ function NoteContainer(){
   
   const[notes, setNotes] = useState([])
   const[url, setUrl] = useState('')
+  const[status, setStatus] = useState(false)
   useEffect(() => {
     chrome.tabs.query({ active: true/*, lastFocusedWindow: true */ }, (tabs) => {
       console.log(tabs)
@@ -25,9 +26,14 @@ function NoteContainer(){
         method:"GET",
       })
       const data = await res.json()
-      const filtered = data.notes.filter((res) => res.webaddress === url)
-      console.log("GET SUCCESS")
-      setNotes(filtered)
+      if(data.msg){
+        const filtered = data.notes.filter((res) => res.webaddress === url)
+        console.log("GET SUCCESS")
+        setNotes(filtered)
+        setStatus(true)
+      }else{
+        setStatus(false)
+      }
     }
     if(url !== '')
       fetchNote()
@@ -106,6 +112,7 @@ function NoteContainer(){
   async function handleUpdateWrapper(e,id){
     handleUpdate(e,id)
   }
+
   const generateNote = () => notes.map((note) => {
       return(
         <div className='note-history-display' key={note._id}>
@@ -124,7 +131,7 @@ function NoteContainer(){
             </form>
       </div>
       <div className='note-history-display-container'> 
-        {generateNote()}
+        {status === true ? generateNote() : <strong><i>Please Loggin First</i></strong>}
       </div>
     </>
   )
