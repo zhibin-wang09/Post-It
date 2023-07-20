@@ -22,6 +22,7 @@ The extension will obtain **informations** on your most **recent** tab **address
 3) You're good to go!
 
 **Remeber to make an account when you use the app**
+
 **Write that information somewhere :)**
 ## Direction ##
 ![Note taken on github.com](./img/Ex1.png?raw=true "Post It on github.com")
