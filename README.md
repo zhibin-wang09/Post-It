@@ -20,8 +20,9 @@ The extension will obtain **informations** on your most **recent** tab **address
 1) Navigate to the same directory as the project
 2) Type command "npm start"
 3) You're good to go!
-**Remeber to make an account when you use the app**
 
+**Remeber to make an account when you use the app**
+**Write that information somewhere :)**
 ## Direction ##
 ![Note taken on github.com](./img/Ex1.png?raw=true "Post It on github.com")
 *The example note is taken on the github.com. The note is taken and fetched according to the base URL.*
