@@ -1,0 +1,31 @@
+body{
+    background-color: #26262b;
+    font-family: monospace;
+    color: white;
+}
+
+#nav-bar-items{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding:0;
+}
+
+#nav-bar-items li{
+    list-style:none;
+}
+
+#nav-bar-items li a{
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease 0s;
+}
+
+#nav-bar-items li a:hover{
+    color: #0088a9;
+}
+
+
+#home-link{
+    color:white;
+}
