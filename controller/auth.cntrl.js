@@ -5,7 +5,6 @@
 
 const user = require("../model/user.model.js")
 const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
 const config = require("../config/auth.config.js")
 
 signup = async (req,res) => {
@@ -37,44 +36,16 @@ signin = async (req,res) => {
         res.status(400).send({message: "Invalid password!"})
         return
     }
-
-    // create a jwt token
-    const token = jwt.sign({id: userInDB._id}, 
-                            config.secret,
-                            {
-                                algorithm: 'HS256',
-                                // allowInsecureKeySizes: true,
-                                // expiresIn: 86400*30
-                            })
-    const identifier = jwt.sign({user: userInDB._id},
-                                config.secret,
-                                {
-                                    algorithm : 'HS256',
-                                    noTimestamp: true
-                                })
-        res.cookie("access-token", token, {
-            maxAge : 60 * 60 * 24 * 30 * 1000,
-            httpOnly: true,
-            sameSite: 'none',
-            secure: true
-        })
-        res.cookie("identifier", identifier, {
-            maxAge : 60 * 60 * 24 * 30 * 1000,
-            httpOnly: true,
-            sameSite: 'none',
-            secure: true
-        })
-    res.status(200).send({message: "Logged in", 
-        identifierToken: identifier,
-        accesstoken: token
-    })
+    req.session.identifier = userInDB._id.toString();
+    console.log("signin",req.session.identifier);
+    res.status(200).send({message: "Logged in"})
 }
 
 signout = async(req, res) => {
     try{
-        res.clearCookie("access-token")
-        res.clearCookie("identifier")
-        req.session = null
+        req.session.destroy(function (err){
+            if(err) res.status(400).send(err);
+        });
         return res.status(200).send({message: "You have been signed out!"})
     }catch(err){
         this.next(err);

@@ -5,7 +5,8 @@ function Signout(){
     async function handleSubmit(e){
         e.preventDefault()
         try{
-            const res = await fetch("https://post-it-upgrade.onrender.com/signout",{
+            //https://post-it-upgrade.onrender.com/signout
+            const res = await fetch("http://localhost:5500/signout",{
                 method: 'POST',
                 credentials: 'include',
                 headers: {

@@ -4,6 +4,7 @@
  * to be able to handle request from the user.
  */
 const express = require('express')
+const session = require('express-session')
 const router = require('./router/route.js')
 const db = require('./database/connect.js')
 var bodyParser = require('body-parser');
@@ -21,6 +22,12 @@ app.use(express.json())
 app.use(cors({
     origin:["http://localhost:3000", "chrome-extension://gadcdadeohomkdklbianclbhhokflaea"],
     credentials:true // 
+}))
+app.use(session({
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {httpOnly: true}
 }))
 app.use(cookieParser())
 app.use("/",router)

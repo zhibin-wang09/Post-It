@@ -12,7 +12,8 @@ function Login(){
             password: e.target.elements.password.value
         }
         try{
-            const res = await fetch("https://post-it-upgrade.onrender.com/signin",{
+            //https://post-it-upgrade.onrender.com/signin
+            const res = await fetch("http://localhost:5500/signin",{
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -20,41 +21,7 @@ function Login(){
                 },
                 body: JSON.stringify(info)
             })
-            const resJson = await res.json ()
-            //console.log(resJson)
-            // chrome.storage.local.set({ "access-token": resJson.accesstoken }, function () {
-            //     if (chrome.runtime.lastError) {
-            //     console.error(chrome.runtime.lastError);
-            //     } else {
-            //     console.log("resJson stored successfully");
-            //     }
-            // });
-            // chrome.storage.local.set({ "identifierToken": resJson.identifierToken }, function () {
-            //     if (chrome.runtime.lastError) {
-            //     console.error(chrome.runtime.lastError);
-            //     } else {
-            //     console.log("resJson stored successfully");
-            //     }
-            // });
-            chrome.cookies.set({
-                url: "http://localhost:3000/",
-                name: "access-token",
-                value: resJson.accesstoken,
-                httpOnly: true,
-                sameSite: "no_restriction",
-                secure: true,
-                expirationDate: 60 * 60 * 24 * 30 * 1000
-            });
-              
-            chrome.cookies.set({
-                url: "http://localhost:3000/",
-                name: "identifierToken",
-                value: resJson.identifierToken,
-                httpOnly: true,
-                sameSite: "no_restriction",
-                secure: true,
-                expirationDate: 60 * 60 * 24 * 30 * 1000
-            });
+            const resJson = await res.json()
             e.target.reset()
             setStatus(resJson.message)
         }catch(err){

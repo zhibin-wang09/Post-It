@@ -9,7 +9,8 @@ function Signup(){
             email: e.target.elements.email.value
         }
         try{
-            const res = await fetch("https://post-it-upgrade.onrender.com/signup",{
+            //https://post-it-upgrade.onrender.com/signup
+            const res = await fetch("http://localhost:5500/signup",{
                 method: 'POST',
                 credentials: 'include',
                 headers: {

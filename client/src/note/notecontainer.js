@@ -22,8 +22,10 @@ function NoteContainer(){
 
   useEffect(() => {
     async function fetchNote(){
-      const res = await fetch('https://post-it-upgrade.onrender.com/note',{
+      //https://post-it-upgrade.onrender.com/note
+      const res = await fetch('http://localhost:5500/note',{
         method:"GET",
+        credentials: 'include',
       })
       const data = await res.json()
       if(data.msg){
@@ -47,16 +49,18 @@ function NoteContainer(){
       webaddress: url
     }
     try {
-      const res = await fetch('https://post-it-upgrade.onrender.com/note' , {
+      //https://post-it-upgrade.onrender.com/note
+      const res = await fetch('http://localhost:5500/note' , {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(note)
       })
       const resJson = await res.json ();
+      console.log(resJson);
       note._id = resJson._id
-      console.log("POST SUCCESS")
       setNotes([...notes, note])
       e.target.reset()
     } catch (error) {
@@ -68,7 +72,8 @@ function NoteContainer(){
     try {
       e.stopPropagation();
       await fetch(`https://post-it-upgrade.onrender.com/note/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      credentials: 'include'
       })
       console.log("DELETE SUCCESS")
       setNotes(notes.filter(note => note._id !== id))
@@ -88,7 +93,8 @@ function NoteContainer(){
       body: JSON.stringify({
         title: e.target.elements.title.value,
         note: e.target.elements.note.value
-      })
+      }),
+      credentials: 'include'
       })
       console.log("PACTCH SUCCESS")
       setNotes(
